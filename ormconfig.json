@@ -1,0 +1,18 @@
+{
+    "type": "postgres",
+    "username": "postgres",
+    "password": "1234",
+    "port": "5432",
+    "host": "localhost",
+    "database": "task-management",
+    "synchronize": true,
+    "logging": true,
+    "entities": ["dist/**/*.entity.{ts,js}"],
+    "migrations": [
+        "dist/src/db/migrations/*.{ts,js}"
+    ],
+    "cli": {
+        "entitiesDir": "src/entity",
+        "migrationsDir": "src/migrations"
+    }
+}
