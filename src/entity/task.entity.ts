@@ -1,14 +1,6 @@
 
 import {Entity, PrimaryGeneratedColumn, Column} from 'typeorm';
 
-// We use enum when we want a property to have a finite 
-// amount of values that we specfify
-export enum TaskStatus {
-    Created = 0,
-    InProgress = 1,
-    Done = 2
-}
-
 @Entity()
 export class TaskEntity {
 
@@ -21,6 +13,6 @@ export class TaskEntity {
     @Column({nullable: true, length: 1024})
     descripton: string;
 
-    @Column({nullable: true, default: TaskStatus.Created})
-    status: TaskStatus;
+    @Column({nullable: true, default: 0})
+    status: number;
 }

@@ -13,6 +13,11 @@ export class TaskController {
         return resp;
     }
 
+    @Get(":status")
+    public async getTasksByStatus(@Param("status") status: string) {
+        this.taskService.getTasksByStatus(status);
+    }
+
     @Get(":id")
     public async showSingle(
         @Param("id") id: number

@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { TaskEntity, TaskStatus } from '../entity/task.entity';
+import { TaskEntity } from '../entity/task.entity';
 import {Repository} from 'typeorm';
 import {InjectRepository} from '@nestjs/typeorm';
 import { TaskDTO } from '../dto/task.dto';
@@ -29,6 +29,14 @@ export class TaskService {
         return tasksDTO;
     }
 
+    public async getTasksByStatus(stat: string) { // TODO: This is not working (problem of types)
+        console.log("This is the stat: ", typeof(stat));
+        let status: number = parseInt(stat);
+        console.log("This is the status: ", typeof(status));
+        const task = await this.taskRepository.findOne({ status });
+        return task;
+    }
+
     public async getOne(id: number) {
         const task: TaskEntity = await this.taskRepository.findOne({where: {id}});
         if (!task) throw new NotFoundException(`Task withh the id ${id} was not found`);
@@ -54,7 +62,7 @@ export class TaskService {
         let newTask: TaskEntity = new TaskEntity();
         newTask.title = task.title;
         newTask.descripton = task.description;
-        newTask.status = TaskStatus.Created;
+        newTask.status = 0;
         this.taskRepository.save(newTask);
     }
 
@@ -62,6 +70,7 @@ export class TaskService {
         this.taskRepository.findOne(task.id).then(oldTask => {
             oldTask.title = task.title;
             oldTask.descripton = task.description;
+            oldTask.status = task.status;
             this.taskRepository.save(oldTask);
         });
     }
